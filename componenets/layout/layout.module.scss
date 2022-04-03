@@ -1,0 +1,59 @@
+@import "../../styles/varibles.scss";
+
+.header {
+  font-family: $headingFontFamily;
+  background-color: $light;
+  padding: 1rem 0;
+  box-shadow: 0 2px 28px 0 rgb(0 0 0 / 9%);
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: 0;
+
+  .header_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navLinks {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  a {
+    cursor: pointer;
+    color: $dark;
+    text-decoration: none;
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &:hover {
+      color: $primary;
+
+      path {
+        stroke: $primary;
+      }
+    }
+
+    img {
+      width: 2rem;
+    }
+  }
+}
+
+.footer {
+  .miniFooter {
+    background-color: $primary-dark;
+    text-align: center;
+    padding: 0.5rem;
+
+    p {
+      color: $off-light;
+      opacity: 90%;
+      font-weight: 200;
+    }
+  }
+}
