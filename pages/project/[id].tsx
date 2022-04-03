@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import { createClient } from "contentful";
 import { ProjectSection } from "../../componenets/projectSction";
 import { contentfulImageUrlFactory } from "../../utils/contentfulImageUrlFactory";
@@ -16,6 +17,59 @@ const ProjectPage = (props: Props) => {
   );
   return (
     <div className="container">
+      <Head>
+        <title>
+          Electro |{" "}
+          {project?.fields[router.locale === "en" ? "name_en" : "name_ar"]}
+        </title>
+        <meta
+          name="description"
+          content={
+            project?.fields[router.locale === "en" ? "name_en" : "name_ar"] +
+            " description"
+          }
+        />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="product" />
+        <meta
+          property="og:url"
+          content={`https://electro-nu.vercel.app/project/${project?.sys?.id}`}
+        />
+        <meta
+          property="og:description"
+          content={
+            project?.fields[router.locale === "en" ? "name_en" : "name_ar"] +
+            " description"
+          }
+        />
+        <meta
+          property="og:image"
+          content={`${contentfulImageUrlFactory(
+            project?.fields?.thumbnail?.fields?.file?.url
+          )}`}
+        />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content={`https://electro-nu.vercel.app/project/${project?.sys?.id}`}
+        />
+        <meta
+          property="twitter:description"
+          content={
+            project?.fields[router.locale === "en" ? "name_en" : "name_ar"] +
+            " description"
+          }
+        />
+        <meta
+          property="twitter:image"
+          content={`${contentfulImageUrlFactory(
+            project?.fields?.thumbnail?.fields?.file?.url
+          )}`}
+        />
+      </Head>
       <ProjectSection
         key={project?.sys?.id || Math.random()}
         id={project?.sys?.id}
@@ -23,12 +77,6 @@ const ProjectPage = (props: Props) => {
         thumbnail={contentfulImageUrlFactory(
           project?.fields?.thumbnail?.fields?.file?.url
         )}
-        thumbnailWidth={
-          project?.fields?.thumbnail?.fields?.file?.details.image.width
-        }
-        thumbnailHeight={
-          project?.fields?.thumbnail?.fields?.file?.details.image.height
-        }
         imageAlt={project?.fields?.name}
         description={
           project?.fields[

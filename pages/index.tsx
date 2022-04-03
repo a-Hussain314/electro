@@ -4,6 +4,7 @@ import { generalContext } from "../context/mainContext";
 import { ProjectSection } from "../componenets/projectSction";
 import { contentfulImageUrlFactory } from "../utils/contentfulImageUrlFactory";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 type homePageProps = { projects: any[] };
 const Home = ({ projects = [] }: homePageProps) => {
@@ -15,30 +16,65 @@ const Home = ({ projects = [] }: homePageProps) => {
   };
 
   return (
-    <div className="container" dir="auto">
-      <p>{router.locale === "en" ? "Home page" : "الصفحة الرئيسية"}</p>
+    <>
+      <Head>
+        <title>Electro</title>
+        <meta name="description" content={"electro website description"} />
 
-      {!!projects.length ? (
-        projects.map((project: any) => {
-          return (
-            <ProjectSection
-              key={project?.sys?.id || Math.random()}
-              id={project?.sys?.id}
-              title={
-                project?.fields[router.locale === "en" ? "name_en" : "name_ar"]
-              }
-              thumbnail={contentfulImageUrlFactory(
-                project?.fields?.thumbnail?.fields?.file?.url
-              )}
-              imageAlt={project?.fields?.name}
-              showDescription={false}
-            />
-          );
-        })
-      ) : (
-        <p>There are no projects</p>
-      )}
-    </div>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={`https://electro-nu.vercel.app`} />
+        <meta
+          property="og:description"
+          content={"electro website description"}
+        />
+        <meta
+          property="og:image"
+          content={"https://upload.wikimedia.org/wikipedia/commons/0/0a/Logo_ligne_E_Narbonne.png"}
+        />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content={`https://electro-nu.vercel.app`}
+        />
+        <meta
+          property="twitter:description"
+          content={"electro website description"}
+        />
+        <meta
+          property="twitter:image"
+          content={"https://upload.wikimedia.org/wikipedia/commons/0/0a/Logo_ligne_E_Narbonne.png"}
+        />
+      </Head>
+      <div className="container" dir="auto">
+        <p>{router.locale === "en" ? "Home page" : "الصفحة الرئيسية"}</p>
+
+        {!!projects.length ? (
+          projects.map((project: any) => {
+            return (
+              <ProjectSection
+                key={project?.sys?.id || Math.random()}
+                id={project?.sys?.id}
+                title={
+                  project?.fields[
+                    router.locale === "en" ? "name_en" : "name_ar"
+                  ]
+                }
+                thumbnail={contentfulImageUrlFactory(
+                  project?.fields?.thumbnail?.fields?.file?.url
+                )}
+                imageAlt={project?.fields?.name}
+                showDescription={false}
+              />
+            );
+          })
+        ) : (
+          <p>There are no projects</p>
+        )}
+      </div>
+    </>
   );
 };
 
