@@ -9,11 +9,11 @@ type Props = {
 };
 
 const ProjectPage = (props: Props) => {
-  let router = useRouter()
+  let router = useRouter();
   let { project } = props;
   let projectImages = project?.fields?.images?.map((image: any) =>
-            contentfulImageUrlFactory(image?.fields.file.url)
-          );
+    contentfulImageUrlFactory(image?.fields.file.url)
+  );
   return (
     <div className="container">
       <ProjectSection
@@ -38,7 +38,6 @@ const ProjectPage = (props: Props) => {
         showImages={true}
         images={projectImages}
       />
-      
     </div>
   );
 };
@@ -47,8 +46,8 @@ export default ProjectPage;
 
 export async function getServerSideProps(context: any) {
   const contentfulData: { space: string; accessToken: string } = {
-    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
-    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_KEY,
+    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || " ",
+    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_KEY || " ",
   };
   const client = createClient(contentfulData);
   const res = await client.getEntry(context?.params?.id);

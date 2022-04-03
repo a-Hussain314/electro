@@ -30,18 +30,7 @@ const Home = ({ projects = [] }: homePageProps) => {
               thumbnail={contentfulImageUrlFactory(
                 project?.fields?.thumbnail?.fields?.file?.url
               )}
-              thumbnailWidth={
-                project?.fields?.thumbnail?.fields?.file?.details.image.width
-              }
-              thumbnailHeight={
-                project?.fields?.thumbnail?.fields?.file?.details.image.height
-              }
               imageAlt={project?.fields?.name}
-              description={
-                project?.fields[
-                  router.locale === "en" ? "description_en" : "description_ar"
-                ]
-              }
               showDescription={false}
             />
           );
@@ -49,7 +38,6 @@ const Home = ({ projects = [] }: homePageProps) => {
       ) : (
         <p>There are no projects</p>
       )}
-      
     </div>
   );
 };
@@ -59,8 +47,8 @@ export default Home;
 // This gets called on every request
 export async function getServerSideProps() {
   const contentfulData: { space: string; accessToken: string } = {
-    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
-    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_KEY,
+    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || " ",
+    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_KEY || " ",
   };
   const client = createClient(contentfulData);
   const res = await client.getEntries({ content_type: "project" });
